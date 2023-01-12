@@ -10,7 +10,6 @@ import java.util.Properties;
 
 import edu.cmu.cs.dickerson.kpd.structure.Edge;
 import edu.cmu.cs.dickerson.kpd.structure.Pool;
-import edu.cmu.cs.dickerson.kpd.structure.types.BloodType;
 
 /**
  * 
@@ -25,6 +24,7 @@ public abstract class Simulation {
 	
 	//File path for storing generated data
 	String PATH = ".";
+	String CUSTOM_WEIGHTS = null;
 	static int TIMEOUT = 600;
 	
 	// Matching-related constants
@@ -63,7 +63,8 @@ public abstract class Simulation {
 		CHAIN_CAP = Integer.parseInt(props.getProperty("CHAIN_CAP", String.valueOf(CHAIN_CAP)));
 		CYCLE_CAP = Integer.parseInt(props.getProperty("CYCLE_CAP", String.valueOf(CHAIN_CAP)));
 		TIMEOUT = Integer.parseInt(props.getProperty("TIMEOUT", String.valueOf(TIMEOUT)));
-		PATH = props.getProperty("PATH", String.valueOf(PATH));
+		PATH = props.getProperty("PATH", PATH);
+		CUSTOM_WEIGHTS = props.getProperty("CUSTOM_WEIGHTS", CUSTOM_WEIGHTS);
 		
 		return props;
 	}
@@ -174,82 +175,84 @@ public abstract class Simulation {
 	public static void updateWeights(Pool pool) {
 		for (Edge e : pool.getNonDummyEdgeSet()) {
 			SimulationPair patient = (SimulationPair) pool.getEdgeTarget(e);
-			double UNOSweight = 100;
-			UNOSweight += 0.07*patient.getIterations()*DAYS_PER_MATCH;
+			SimulationAltruist donor;
 			if(pool.getEdgeSource(e) instanceof SimulationPair) {
-				SimulationPair donor = (SimulationPair) pool.getEdgeSource(e);
-				UNOSweight += (patient.HLA_A_cand.equals(donor.HLA_A_don) &&
-						patient.HLA_B_cand.equals(donor.HLA_B_don) &&
-						patient.HLA_DR_cand.equals(donor.HLA_DR_don)) ? 10 : 0;
+				donor = ((SimulationPair) pool.getEdgeSource(e)).toSimulationAltruist();
 			} else {
-				SimulationAltruist donor = (SimulationAltruist) pool.getEdgeSource(e);
-				UNOSweight += (patient.HLA_A_cand.equals(donor.HLA_A_don) &&
-						patient.HLA_B_cand.equals(donor.HLA_B_don) &&
-						patient.HLA_DR_cand.equals(donor.HLA_DR_don)) ? 10 : 0;
-			}
-			UNOSweight += patient.age_cand < 18 ? 100 : 0;
-			switch (patient.getBloodTypePatient()) {
-			case O:
-				UNOSweight += 100;
-				break;
-			case B:
-				UNOSweight += 50;
-				break;
-			case A:
-				UNOSweight += 25;
-				break;
-			default:
-				break;
-			}
-			switch (patient.getBloodTypeDonor()) {
-			case AB:
-				UNOSweight += 500;
-				break;
-			case A:
-				UNOSweight += 250;
-				break;
-			case B:
-				UNOSweight += 100;
-				break;
-			default:
-				break;
-			}
-			if (patient.getPatientCPRA() == 100) {
-				UNOSweight += 2000;
-			} else if (patient.getPatientCPRA() == 99) {
-				UNOSweight += 1500;
-			} else if (patient.getPatientCPRA() == 98) {
-				UNOSweight += 1250;
-			} else if (patient.getPatientCPRA() == 97) {
-				UNOSweight += 900;
-			} else if (patient.getPatientCPRA() == 96) {
-				UNOSweight += 700;
-			} else if (patient.getPatientCPRA() == 95) {
-				UNOSweight += 500;
-			} else if (patient.getPatientCPRA() >= 90) {
-				UNOSweight += 300;
-			} else if (patient.getPatientCPRA() >= 85) {
-				UNOSweight += 200;
-			} else if (patient.getPatientCPRA() >= 80) {
-				UNOSweight += 125;
-			} else if (patient.getPatientCPRA() >= 75) {
-				UNOSweight += 75;
-			} else if (patient.getPatientCPRA() >= 70) {
-				UNOSweight += 50;
-			} else if (patient.getPatientCPRA() >= 60) {
-				UNOSweight += 25;
-			} else if (patient.getPatientCPRA() >= 50) {
-				UNOSweight += 20;
-			} else if (patient.getPatientCPRA() >= 40) {
-				UNOSweight += 15;
-			} else if (patient.getPatientCPRA() >= 30) {
-				UNOSweight += 10;
-			} else if (patient.getPatientCPRA() >= 20) {
-				UNOSweight += 5;
+				donor = (SimulationAltruist) pool.getEdgeSource(e);
 			}
 			
-			pool.setEdgeWeight(e, UNOSweight);
+			pool.setEdgeWeight(e, computeWeight(donor, patient));
 		}
+	}
+	
+	public static double computeWeight(SimulationAltruist donor, SimulationPair patient) {
+		double UNOSweight = 100;
+		UNOSweight += 0.07*patient.getIterations()*DAYS_PER_MATCH;
+		UNOSweight += (patient.HLA_A_cand.equals(donor.HLA_A_don) &&
+				patient.HLA_B_cand.equals(donor.HLA_B_don) &&
+				patient.HLA_DR_cand.equals(donor.HLA_DR_don)) ? 10 : 0;
+		UNOSweight += patient.age_cand < 18 ? 100 : 0;
+		switch (patient.getBloodTypePatient()) {
+		case O:
+			UNOSweight += 100;
+			break;
+		case B:
+			UNOSweight += 50;
+			break;
+		case A:
+			UNOSweight += 25;
+			break;
+		default:
+			break;
+		}
+		switch (patient.getBloodTypeDonor()) {
+		case AB:
+			UNOSweight += 500;
+			break;
+		case A:
+			UNOSweight += 250;
+			break;
+		case B:
+			UNOSweight += 100;
+			break;
+		default:
+			break;
+		}
+		if (patient.getPatientCPRA() == 100) {
+			UNOSweight += 2000;
+		} else if (patient.getPatientCPRA() == 99) {
+			UNOSweight += 1500;
+		} else if (patient.getPatientCPRA() == 98) {
+			UNOSweight += 1250;
+		} else if (patient.getPatientCPRA() == 97) {
+			UNOSweight += 900;
+		} else if (patient.getPatientCPRA() == 96) {
+			UNOSweight += 700;
+		} else if (patient.getPatientCPRA() == 95) {
+			UNOSweight += 500;
+		} else if (patient.getPatientCPRA() >= 90) {
+			UNOSweight += 300;
+		} else if (patient.getPatientCPRA() >= 85) {
+			UNOSweight += 200;
+		} else if (patient.getPatientCPRA() >= 80) {
+			UNOSweight += 125;
+		} else if (patient.getPatientCPRA() >= 75) {
+			UNOSweight += 75;
+		} else if (patient.getPatientCPRA() >= 70) {
+			UNOSweight += 50;
+		} else if (patient.getPatientCPRA() >= 60) {
+			UNOSweight += 25;
+		} else if (patient.getPatientCPRA() >= 50) {
+			UNOSweight += 20;
+		} else if (patient.getPatientCPRA() >= 40) {
+			UNOSweight += 15;
+		} else if (patient.getPatientCPRA() >= 30) {
+			UNOSweight += 10;
+		} else if (patient.getPatientCPRA() >= 20) {
+			UNOSweight += 5;
+		}
+		return UNOSweight;
 	}
 	
 

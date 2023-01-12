@@ -53,6 +53,8 @@ public class BatchSimulation extends Simulation {
 			PrintWriter pwt = new PrintWriter(wt);
 			props.list(pwt);
 			metadatastring += wt.toString()+"\n\n";
+		} else {
+			metadatastring += "-- using UNOS default parameters --\n\n";
 		}
 	}
 	

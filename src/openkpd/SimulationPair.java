@@ -52,6 +52,8 @@ public class SimulationPair extends VertexPair {
 	                 "DA1","DA2","DB1","DB2","DDR1","DDR2","EGFR","HCU","SEX_CAND","SEX_DON",
 	                 "WEIGHT_CAND","WEIGHT_DON"});
 	
+	String[] donor_entries;
+	
 	public SimulationPair(int ID, String[] entries) {
 		super(ID);
 		DISPLAY_ID = ID;
@@ -84,6 +86,14 @@ public class SimulationPair extends VertexPair {
 		this.weight_cand = Double.parseDouble(entries[24]);
 		this.weight_don = Double.parseDouble(entries[25]);
 		
+		donor_entries = new String[] {entries[1], entries[2], entries[4], entries[5], entries[6],
+				entries[14], entries[15], entries[16], entries[17], entries[18], entries[19], entries[20],
+				entries[21], entries[23], entries[25]};
+		
+	}
+	
+	public SimulationAltruist toSimulationAltruist() {
+		return new SimulationAltruist(this.ID, donor_entries);
 	}
 	
 	public void setCompatible(boolean ic) {
