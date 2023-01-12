@@ -10,7 +10,7 @@ public class Main {
 		switch(args[0]) {
 		case "batch":
 			if (args.length == 3) {
-				sim = new BatchSimulation(Integer.parseInt(args[1]), args[2]);
+				sim = new BatchSimulation(args[1], Integer.parseInt(args[2]));
 			} else {
 				sim = new BatchSimulation(Integer.parseInt(args[1]));
 			}
@@ -19,8 +19,8 @@ public class Main {
 			if (args.length == 4) {
 				sim = new SampleSimulation(Integer.parseInt(args[1]),  args[2], Integer.parseInt(args[3]));
 			} else {
-				sim = new SampleSimulation(Integer.parseInt(args[1]), Integer.parseInt(args[2]),
-						Integer.parseInt(args[3]), Integer.parseInt(args[4]));
+				sim = new SampleSimulation(args[1], Integer.parseInt(args[2]),
+						args[3], Integer.parseInt(args[4]));
 			}
 			break;
 		default:

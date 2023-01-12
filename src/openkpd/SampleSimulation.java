@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Random;
 
 import edu.cmu.cs.dickerson.kpd.dynamic.arrivals.ExponentialArrivalDistribution;
+import edu.cmu.cs.dickerson.kpd.dynamic.arrivals.PoissonArrivalDistribution;
 import edu.cmu.cs.dickerson.kpd.solver.GreedyPackingSolver;
 import edu.cmu.cs.dickerson.kpd.solver.approx.CyclesSampleChainsIPPacker;
 import edu.cmu.cs.dickerson.kpd.solver.exception.SolverException;
@@ -45,30 +46,14 @@ public class SampleSimulation extends Simulation {
 	int SAMPLE_ID;
 	String stub;
 	
-	public SampleSimulation(int trajs, int np, int na, int sampleID, String path) {
-		SUBJECT = (SimulationPair) poolGen.generate(1,0).getPairs().first();
-		TRAJECTORIES = trajs;
-		INITIAL_PAIRS = np;
-		INITIAL_ALTS = na;
-		PATH = path;
-		SAMPLE_ID = sampleID;
-	}
-	
-	public SampleSimulation(int trajs, int np, int na, int sampleID) {
-		SUBJECT = (SimulationPair) poolGen.generate(1,0).getPairs().first();
-		TRAJECTORIES = trajs;
-		INITIAL_PAIRS = np;
-		INITIAL_ALTS = na;
-		PATH = ".";
-		SAMPLE_ID = sampleID;
-	}
-	
 	public SampleSimulation(int trajs, String pool, int sampleID) throws IOException, ClassNotFoundException {
+		this(null, trajs, pool, sampleID);
+	}
+	
+	public SampleSimulation(String config, int trajs, String pool, int sampleID) throws IOException, ClassNotFoundException {
+		this.config(config);
 		SUBJECT = (SimulationPair) poolGen.generate(1,0).getPairs().first();
 		TRAJECTORIES = trajs;
-		INITIAL_PAIRS = 0;
-		INITIAL_ALTS = 0;
-		PATH = ".";
 		SAMPLE_ID = sampleID;
 		stub = pool;
         
@@ -138,8 +123,8 @@ public class SampleSimulation extends Simulation {
 	@Override
 	void simulate() throws IOException {
 
-		ExponentialArrivalDistribution m = new ExponentialArrivalDistribution(1.0 / EXPECTED_PAIRS);
-		ExponentialArrivalDistribution a = new ExponentialArrivalDistribution(1.0 / EXPECTED_ALTRUISTS);
+		PoissonArrivalDistribution m = new PoissonArrivalDistribution(EXPECTED_PAIRS);
+		PoissonArrivalDistribution a = new PoissonArrivalDistribution(EXPECTED_ALTRUISTS);
 		
 		for (int i = 0; i < TRAJECTORIES; i++) {
 			

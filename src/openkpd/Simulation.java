@@ -1,10 +1,12 @@
 package openkpd;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Collections;
+import java.util.Properties;
 
 import edu.cmu.cs.dickerson.kpd.structure.Edge;
 import edu.cmu.cs.dickerson.kpd.structure.Pool;
@@ -22,23 +24,19 @@ public abstract class Simulation {
 	
 	
 	//File path for storing generated data
-	String PATH;
+	String PATH = ".";
 	static int TIMEOUT = 600;
-	
-	//Pool starting parameters
-	static int INITIAL_PAIRS = 0;
-	static int INITIAL_ALTS = 0;
 	
 	// Matching-related constants
 	// Probabilities generated based on a match frequency of 1 match per week
-	static final double DAYS_PER_MATCH = 5.803886925795053;
-	static final double DEATH = 0.00220192718495970;
-	static final double PATIENCE = 0;
-	static final double RENEGE = .5;
-	static final double EXPECTED_PAIRS = 4.7715827338129495;
-	static final double EXPECTED_ALTRUISTS = 0.1420863309352518;
-	static final int CHAIN_CAP = 4;
-	static final int CYCLE_CAP = 3;
+	static double DAYS_PER_MATCH = 5.803886925795053;
+	static double DEATH = 0.00220192718495970;
+	static double PATIENCE = 0;
+	static double RENEGE = .5;
+	static double EXPECTED_PAIRS = 4.7715827338129495;
+	static double EXPECTED_ALTRUISTS = 0.1420863309352518;
+	static int CHAIN_CAP = 4;
+	static int CYCLE_CAP = 3;
 	
 	
 	static final boolean DEBUG = false;
@@ -49,6 +47,26 @@ public abstract class Simulation {
 	abstract String generateMetadata();
 	
 	abstract void simulate() throws IOException;
+	
+	public Properties config(String config) throws IOException {
+		if(config == null){
+			return null;
+		}
+		Properties props = new Properties();
+		props.load(new FileInputStream(config));
+		DAYS_PER_MATCH = Double.parseDouble(props.getProperty("DAYS_PER_MATCH", String.valueOf(DAYS_PER_MATCH)));
+		DEATH = Double.parseDouble(props.getProperty("EXPIRY", String.valueOf(DEATH)));
+		PATIENCE = Double.parseDouble(props.getProperty("PATIENCE", String.valueOf(PATIENCE)));
+		RENEGE = Double.parseDouble(props.getProperty("RENEGE", String.valueOf(RENEGE)));
+		EXPECTED_PAIRS = Double.parseDouble(props.getProperty("EXPECTED_PAIRS", String.valueOf(EXPECTED_PAIRS)));
+		EXPECTED_ALTRUISTS = Double.parseDouble(props.getProperty("EXPECTED_ALTRUISTS", String.valueOf(EXPECTED_ALTRUISTS)));
+		CHAIN_CAP = Integer.parseInt(props.getProperty("CHAIN_CAP", String.valueOf(CHAIN_CAP)));
+		CYCLE_CAP = Integer.parseInt(props.getProperty("CYCLE_CAP", String.valueOf(CHAIN_CAP)));
+		TIMEOUT = Integer.parseInt(props.getProperty("TIMEOUT", String.valueOf(TIMEOUT)));
+		PATH = props.getProperty("PATH", String.valueOf(PATH));
+		
+		return props;
+	}
 	
 	public void run() {
 		try {

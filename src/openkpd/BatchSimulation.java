@@ -6,14 +6,18 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Properties;
 import java.util.Random;
 
 import edu.cmu.cs.dickerson.kpd.dynamic.arrivals.ExponentialArrivalDistribution;
+import edu.cmu.cs.dickerson.kpd.dynamic.arrivals.PoissonArrivalDistribution;
 import edu.cmu.cs.dickerson.kpd.solver.GreedyPackingSolver;
 import edu.cmu.cs.dickerson.kpd.solver.approx.CyclesSampleChainsIPPacker;
 import edu.cmu.cs.dickerson.kpd.solver.exception.SolverException;
@@ -33,17 +37,23 @@ public class BatchSimulation extends Simulation {
 	
 	String metadatastring; 
 	
-	public BatchSimulation(int iters, String path) {
-		ITERATIONS = iters;
-		PATH = path+"/"+pathString();
+	public BatchSimulation(int days) throws IOException {
+		this(null, days);
 	}
 	
-	public BatchSimulation(int days) {
+	public BatchSimulation(String config, int days) throws IOException {
+		Properties props = this.config(config);
 		DAYS = days;
 		ITERATIONS = (int) Math.round(days/DAYS_PER_MATCH);
-		PATH = "./"+pathString();
+		PATH += "/"+pathString();
 		metadatastring = "Running a batch simulation for "+DAYS+" days ("+ITERATIONS+" iterations), with a timeout period of "
 				+TIMEOUT+" iterations.\n\n";
+		if (props != null) {
+			StringWriter wt = new StringWriter();
+			PrintWriter pwt = new PrintWriter(wt);
+			props.list(pwt);
+			metadatastring += wt.toString()+"\n\n";
+		}
 	}
 	
 	private String pathString() {
@@ -76,31 +86,31 @@ public class BatchSimulation extends Simulation {
 		Random rDeparture = new Random(rDepartureSeed);
 		
 		PoolGenerator poolGen = new SimulationPoolGenerator(rEntrance);
-		ExponentialArrivalDistribution m = new ExponentialArrivalDistribution(1.0 / EXPECTED_PAIRS);
-		ExponentialArrivalDistribution a = new ExponentialArrivalDistribution(1.0 / EXPECTED_ALTRUISTS);
+		PoissonArrivalDistribution m = new PoissonArrivalDistribution(EXPECTED_PAIRS);
+		PoissonArrivalDistribution a = new PoissonArrivalDistribution(EXPECTED_ALTRUISTS);
+		//ExponentialArrivalDistribution m = new ExponentialArrivalDistribution(1.0 / EXPECTED_PAIRS);
+		//ExponentialArrivalDistribution a = new ExponentialArrivalDistribution(1.0 / EXPECTED_ALTRUISTS);
 		Pool pool = new Pool(Edge.class);
 		ArrayList<Cycle> matches = new ArrayList<Cycle>();
-		
-		poolGen.addVerticesToPool(pool, INITIAL_PAIRS, INITIAL_ALTS);
 		
 		for (int t = 0; t < ITERATIONS; t++) {
 			if (t != 0 && t % Math.round(365/DAYS_PER_MATCH) == 0) {
 				addMetadata("Year "+t/Math.round(365/DAYS_PER_MATCH)+" (iteration "+t+", currentVertexID="+((SimulationPoolGenerator) poolGen).getVertexID()+")", pool.getNumPairs(), pool.getNumAltruists());
-				FileOutputStream saveFile = new FileOutputStream(root.getPath()+"/year"+t/Math.round(365/DAYS_PER_MATCH)+".pool");
-				FileOutputStream saveFile2 = new FileOutputStream(root.getPath()+"/year"+t/Math.round(365/DAYS_PER_MATCH)+".poolgen");
-				try {
-					ObjectOutputStream sav = new ObjectOutputStream(saveFile);
-					ObjectOutputStream sav2 = new ObjectOutputStream(saveFile2);
-					sav.writeObject(pool);
-					sav2.writeObject(poolGen);
-					sav.close();
-					sav2.close();
-				}
-				catch (Exception e) {
-					System.out.println(e.getMessage());
-				}
-				saveFile.close();
-				saveFile2.close();
+//				FileOutputStream saveFile = new FileOutputStream(root.getPath()+"/year"+t/Math.round(365/DAYS_PER_MATCH)+".pool");
+//				FileOutputStream saveFile2 = new FileOutputStream(root.getPath()+"/year"+t/Math.round(365/DAYS_PER_MATCH)+".poolgen");
+//				try {
+//					ObjectOutputStream sav = new ObjectOutputStream(saveFile);
+//					ObjectOutputStream sav2 = new ObjectOutputStream(saveFile2);
+//					sav.writeObject(pool);
+//					sav2.writeObject(poolGen);
+//					sav.close();
+//					sav2.close();
+//				}
+//				catch (Exception e) {
+//					System.out.println(e.getMessage());
+//				}
+//				saveFile.close();
+//				saveFile2.close();
 			}
 			int pairs = m.draw().intValue();
 			int alts = a.draw().intValue();
@@ -213,6 +223,22 @@ public class BatchSimulation extends Simulation {
 		
 		addMetadata("TERMINATED (currentVertexID="+((SimulationPoolGenerator) poolGen).getVertexID()+")"
 				, pool.getNumPairs(), pool.getNumAltruists());
+		
+		FileOutputStream saveFile = new FileOutputStream(root.getPath()+"/terminal.pool");
+		FileOutputStream saveFile2 = new FileOutputStream(root.getPath()+"/terminal.poolgen");
+		try {
+			ObjectOutputStream sav = new ObjectOutputStream(saveFile);
+			ObjectOutputStream sav2 = new ObjectOutputStream(saveFile2);
+			sav.writeObject(pool);
+			sav2.writeObject(poolGen);
+			sav.close();
+			sav2.close();
+		}
+		catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		saveFile.close();
+		saveFile2.close();
 		
 		for (VertexPair p : pool.getPairs()) {
 			SimulationPair q = (SimulationPair) p;
