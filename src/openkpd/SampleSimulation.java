@@ -46,11 +46,11 @@ public class SampleSimulation extends Simulation {
 	int SAMPLE_ID;
 	String stub;
 	
-	public SampleSimulation(int trajs, String pool, int sampleID) throws IOException, ClassNotFoundException {
+	public SampleSimulation(int trajs, String pool, int sampleID) throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
 		this(null, trajs, pool, sampleID);
 	}
 	
-	public SampleSimulation(String config, int trajs, String pool, int sampleID) throws IOException, ClassNotFoundException {
+	public SampleSimulation(String config, int trajs, String pool, int sampleID) throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
 		this.config(config);
 		SUBJECT = (SimulationPair) poolGen.generate(1,0).getPairs().first();
 		TRAJECTORIES = trajs;

@@ -4,7 +4,7 @@ import java.io.IOException;
 
 public class Main {
 
-	public static void main(String[] args) throws IOException, NumberFormatException, ClassNotFoundException {
+	public static void main(String[] args) throws IOException, NumberFormatException, ClassNotFoundException, InstantiationException, IllegalAccessException {
 		Simulation sim = null;
 		
 		switch(args[0]) {

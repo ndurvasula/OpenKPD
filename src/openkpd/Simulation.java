@@ -11,6 +11,19 @@ import java.util.Properties;
 import edu.cmu.cs.dickerson.kpd.structure.Edge;
 import edu.cmu.cs.dickerson.kpd.structure.Pool;
 
+import java.io.Writer;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import javax.tools.Diagnostic;
+import javax.tools.DiagnosticCollector;
+import javax.tools.JavaCompiler;
+import javax.tools.JavaFileObject;
+import javax.tools.StandardJavaFileManager;
+import javax.tools.ToolProvider;
+
 /**
  * 
  * @author Naveen Durvasula
@@ -24,12 +37,12 @@ public abstract class Simulation {
 	
 	//File path for storing generated data
 	String PATH = ".";
-	String CUSTOM_WEIGHTS = null;
+	static CustomWeights CUSTOM_WEIGHTS = null;
 	static int TIMEOUT = 600;
 	
 	// Matching-related constants
 	// Probabilities generated based on a match frequency of 1 match per week
-	static double DAYS_PER_MATCH = 5.803886925795053;
+	public static double DAYS_PER_MATCH = 5.803886925795053;
 	static double DEATH = 0.00220192718495970;
 	static double PATIENCE = 0;
 	static double RENEGE = .5;
@@ -48,7 +61,7 @@ public abstract class Simulation {
 	
 	abstract void simulate() throws IOException;
 	
-	public Properties config(String config) throws IOException {
+	public Properties config(String config) throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
 		if(config == null){
 			return null;
 		}
@@ -64,7 +77,51 @@ public abstract class Simulation {
 		CYCLE_CAP = Integer.parseInt(props.getProperty("CYCLE_CAP", String.valueOf(CHAIN_CAP)));
 		TIMEOUT = Integer.parseInt(props.getProperty("TIMEOUT", String.valueOf(TIMEOUT)));
 		PATH = props.getProperty("PATH", PATH);
-		CUSTOM_WEIGHTS = props.getProperty("CUSTOM_WEIGHTS", CUSTOM_WEIGHTS);
+		String CUSTOM_WEIGHTS_PATH = props.getProperty("CUSTOM_WEIGHTS_PATH", null);
+		String CUSTOM_WEIGHTS_CLASSNAME = props.getProperty("CUSTOM_WEIGHTS_CLASSNAME", null);
+		
+		if (CUSTOM_WEIGHTS_PATH != null) {
+			DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<JavaFileObject>();
+            JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
+            StandardJavaFileManager fileManager = compiler.getStandardFileManager(diagnostics, null, null);
+
+            List<String> optionList = new ArrayList<String>();
+            optionList.add("-classpath");
+            optionList.add(System.getProperty("java.class.path") + File.pathSeparator + "./OpenKPD.jar");
+
+            Iterable<? extends JavaFileObject> compilationUnit
+                    = fileManager.getJavaFileObjectsFromFiles(Arrays.asList(new File(CUSTOM_WEIGHTS_PATH)));
+            JavaCompiler.CompilationTask task = compiler.getTask(
+                null, 
+                fileManager, 
+                diagnostics, 
+                optionList, 
+                null, 
+                compilationUnit);
+            
+            if (task.call()) {
+                /** Load and execute *************************************************************************************************/
+                // Create a new custom class loader, pointing to the directory that contains the compiled
+                // classes, this should point to the top of the package structure!
+                URLClassLoader classLoader = new URLClassLoader(new URL[]{new File("./").toURI().toURL()});
+                // Load the class from the classloader by name....
+                Class<?> loadedClass = classLoader.loadClass(CUSTOM_WEIGHTS_CLASSNAME);
+                // Create a new instance...
+                Object obj = loadedClass.newInstance();
+                // Santity check
+                if (obj instanceof CustomWeights) {
+                    // Cast to the DoStuff interface
+                    CUSTOM_WEIGHTS = (CustomWeights) obj;
+                }
+            } else {
+                for (Diagnostic<? extends JavaFileObject> diagnostic : diagnostics.getDiagnostics()) {
+                    System.out.format("Error on line %d in %s%n",
+                            diagnostic.getLineNumber(),
+                            diagnostic.getSource().toUri());
+                }
+            }
+            fileManager.close(); 
+		}
 		
 		return props;
 	}
@@ -181,8 +238,11 @@ public abstract class Simulation {
 			} else {
 				donor = (SimulationAltruist) pool.getEdgeSource(e);
 			}
-			
-			pool.setEdgeWeight(e, computeWeight(donor, patient));
+			if (CUSTOM_WEIGHTS != null) {
+				pool.setEdgeWeight(e, CUSTOM_WEIGHTS.computeWeight(donor, patient));
+			} else {
+				pool.setEdgeWeight(e, computeWeight(donor, patient));
+			}
 		}
 	}
 	

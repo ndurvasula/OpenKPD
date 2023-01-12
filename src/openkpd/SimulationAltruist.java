@@ -13,21 +13,21 @@ public class SimulationAltruist extends VertexAltruist{
 	 */
 	private static final long serialVersionUID = 1L;
 	//Continuous features
-	double age_don;
-	double egfr;
-	double bmi_don;
-	double bp_systolic;
-	double weight_don;
+	public double age_don;
+	public double egfr;
+	public double bmi_don;
+	public double bp_systolic;
+	public double weight_don;
 	
 	//Binary features
-	boolean isAfricanAmerican;
-	boolean isCigaretteUser;
-	boolean isDonorMale;
+	public boolean isAfricanAmerican;
+	public boolean isCigaretteUser;
+	public boolean isDonorMale;
 	
 	//HLA
-	double[] HLA_A_don = new double[2];
-	double[] HLA_B_don = new double[2];
-	double[] HLA_DR_don = new double[2];
+	public double[] HLA_A_don = new double[2];
+	public double[] HLA_B_don = new double[2];
+	public double[] HLA_DR_don = new double[2];
 	
 	//Lookup code for alts.csv
 	static List<String> dict =  Arrays.asList(new String[]{"ABO_DON", "AFRICAN_AMERICAN", "AGE_AT_ADD_DON",

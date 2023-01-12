@@ -23,28 +23,28 @@ public class SimulationPair extends VertexPair {
 	//Already included is patient CPRA and donor/patient blood types
 	
 	//Continuous features
-	double age_don;
-	double age_cand;
-	double egfr;
-	double bmi_don;
-	double bp_systolic;
-	double weight_don;
-	double weight_cand;
+	public double age_don;
+	public double age_cand;
+	public double egfr;
+	public double bmi_don;
+	public double bp_systolic;
+	public double weight_don;
+	public double weight_cand;
 	
 	//Binary features
-	boolean isAfricanAmerican;
-	boolean isCigaretteUser;
-	boolean isDonorMale;
-	boolean isPatientMale;
+	public boolean isAfricanAmerican;
+	public boolean isCigaretteUser;
+	public boolean isDonorMale;
+	public boolean isPatientMale;
 	
 	//HLA
-	double[] HLA_A_don = new double[2];
-	double[] HLA_B_don = new double[2];
-	double[] HLA_DR_don = new double[2];
+	public double[] HLA_A_don = new double[2];
+	public double[] HLA_B_don = new double[2];
+	public double[] HLA_DR_don = new double[2];
 	
-	double[] HLA_A_cand = new double[2];
-	double[] HLA_B_cand = new double[2];
-	double[] HLA_DR_cand = new double[2];
+	public double[] HLA_A_cand = new double[2];
+	public double[] HLA_B_cand = new double[2];
+	public double[] HLA_DR_cand = new double[2];
 	
 	//Lookup code for pairs.csv
 	static List<String> dict =  Arrays.asList(new String[]{"ABO_CAND","ABO_DON","AFRICAN_AMERICAN","AGE_AT_ADD_CAND","AGE_AT_ADD_DON",

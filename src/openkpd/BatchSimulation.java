@@ -37,11 +37,11 @@ public class BatchSimulation extends Simulation {
 	
 	String metadatastring; 
 	
-	public BatchSimulation(int days) throws IOException {
+	public BatchSimulation(int days) throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
 		this(null, days);
 	}
 	
-	public BatchSimulation(String config, int days) throws IOException {
+	public BatchSimulation(String config, int days) throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
 		Properties props = this.config(config);
 		DAYS = days;
 		ITERATIONS = (int) Math.round(days/DAYS_PER_MATCH);
