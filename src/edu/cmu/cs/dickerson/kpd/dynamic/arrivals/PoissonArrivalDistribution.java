@@ -2,27 +2,27 @@ package edu.cmu.cs.dickerson.kpd.dynamic.arrivals;
 
 import java.util.Random;
 
-public class PoissonArrivalDistribution extends ArrivalDistribution<Integer> {
+public class PoissonArrivalDistribution extends ArrivalDistribution<Double> {
 
-	private int lambda;
+	private double lambda;
 	private double L;
 
-	public PoissonArrivalDistribution(int lambda) {
+	public PoissonArrivalDistribution(double lambda) {
 		this(lambda, new Random());
 	}
 
-	public PoissonArrivalDistribution(int lambda, Random random) {
-		super(0, Integer.MAX_VALUE, random);
+	public PoissonArrivalDistribution(double lambda, Random random) {
+		super(0.0, Double.MAX_VALUE, random);
 		this.lambda = lambda;
 		this.L = Math.exp(-lambda);
 	}
 
 	
 	@Override
-	public Integer draw() {
+	public Double draw() {
 		// Knuth implementation, not great for large lambdas, but my lambdas are small
 		double p = 1.0;
-		int k = 0;
+		double k = 0;
 		do {
 			k++;
 			p *= super.random.nextDouble();
@@ -32,7 +32,7 @@ public class PoissonArrivalDistribution extends ArrivalDistribution<Integer> {
 	}
 
 	@Override
-	public Integer expectedDraw() {
+	public Double expectedDraw() {
 		// Expectation of Poisson(lambda) is lambda
 		return lambda;
 	}
