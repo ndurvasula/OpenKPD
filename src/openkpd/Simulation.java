@@ -11,7 +11,6 @@ import java.util.Properties;
 import edu.cmu.cs.dickerson.kpd.structure.Edge;
 import edu.cmu.cs.dickerson.kpd.structure.Pool;
 
-import java.io.Writer;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
@@ -22,7 +21,7 @@ import javax.tools.DiagnosticCollector;
 import javax.tools.JavaCompiler;
 import javax.tools.JavaFileObject;
 import javax.tools.StandardJavaFileManager;
-import javax.tools.ToolProvider;
+import com.sun.tools.javac.api.JavacTool;
 
 /**
  * 
@@ -82,7 +81,7 @@ public abstract class Simulation {
 		
 		if (CUSTOM_WEIGHTS_PATH != null) {
 			DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<JavaFileObject>();
-            JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
+            JavaCompiler compiler = JavacTool.create();
             StandardJavaFileManager fileManager = compiler.getStandardFileManager(diagnostics, null, null);
 
             List<String> optionList = new ArrayList<String>();
