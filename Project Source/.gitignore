@@ -1,0 +1,27 @@
+# Kidney Exchange #
+*.csv
+*.input
+*.cnf
+*.tgz
+*.dzn
+*.graph
+
+# Java and Eclipse #
+*.jar
+*.war
+*.ear
+*.class
+.classpath
+/bin
+
+# System #
+*~
+*.lock
+*.~lock*
+*.DS_Store
+*.swp
+*.out
+
+# Exceptions #
+!lib/*
+lib/cplex.jar  # do not include CPLEX (licensing? who knows)
