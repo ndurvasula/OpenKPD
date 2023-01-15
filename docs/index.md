@@ -46,7 +46,7 @@ OpenKPD was developed as a fork of [JohnDickerson/KidneyExchange](https://github
 
 ### License
 
-Just the Docs is distributed by an [GPL license](https://github.com/ndurvasula/OpenKPD/LICENSE.txt).
+OpenKPD is distributed by an [GNU General Public License v2.0](https://github.com/ndurvasula/OpenKPD/blob/master/LICENSE).
 
 ### Contributing
 
