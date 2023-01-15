@@ -10,3 +10,4 @@ CHAIN_CAP = 4
 CYCLE_CAP = 3
 CUSTOM_WEIGHTS_PATH=./custom/UNOSWeights.java
 CUSTOM_WEIGHTS_CLASSNAME=custom.UNOSWeights
+CPLEX_PATH=/<path to cplex>/x86-64_<your OS>
