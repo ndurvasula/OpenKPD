@@ -12,16 +12,25 @@ permalink: /
 OpenKPD provides a platform for generating realistic kidney exchange data under a customizable matching policy.  
 {: .fs-6 .fw-300 }
 
-[Download latest release](#getting-started){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }
+[Download OpenKPD](/OpenKPD.zip){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }
 [View it on GitHub](https://github.com/ndurvasula/OpenKPD){: .btn .fs-5 .mb-4 .mb-md-0 }
 
 ---
+
+## What is kidney exchange?
+
+Kidney failure is a life-threatening health issue that affects hundreds of thousands of people worldwide. In the US alone, the waitlist for a kidney transplant has over 100,000 patients. This list is growing: demand far outstrips supply.
+
+A recent innovation, kidney exchange, allows patients to bring an (incompatible) donor to a large pool where they can swap donors with other patients. As of 2012–2013, roughly 10% of US kidney transplants occurred through a variety of kidney exchanges. Outside of the US, many countries (the UK, the Netherlands, Portugal, Israel, ...) are fielding exchanges.
+
+## What does this code contain?
+
+This code 
 
 ## Getting started
 
 OpenKPD requires only two dependencies to run: Java and CPLEX. Any 64-bit installation of [Java](https://www.java.com/en/download/manual.jsp) (JRE or JDK) will work with OpenKPD. OpenKPD also requires CPLEX Optimization Studio 12.6.3. CPLEX can be downloaded for free through the [IBM Academic Initiative](https://academic.ibm.com/a2mt/email-auth).
 
-The latest version of OpenKPD can be downloaded [here](/OpenKPD.zip).
 
 ## About OpenKPD
 
