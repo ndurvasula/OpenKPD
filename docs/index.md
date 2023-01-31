@@ -23,6 +23,13 @@ Kidney failure is a life-threatening health issue that affects hundreds of thous
 
 A recent innovation, kidney exchange, allows patients to bring an (incompatible) donor to a large pool where they can swap donors with other patients. As of 2012–2013, roughly 10% of US kidney transplants occurred through a variety of kidney exchanges. Outside of the US, many countries (the UK, the Netherlands, Portugal, Israel, ...) are fielding exchanges.
 
+## What does this package provide?
+
+Detailed data pertaining to realistic kidney exchange networks can give crucial insight into how to improve these systems to be more efficient and equitable. However, much of this data is inaccessible to researchers due to its fundamentally sensitive nature. This package provides a means for generating realistic synthetic data so that researchers can have open access to key data without infringing upon patient privacy. 
+
+This framework comes packaged with two simulators: the [batch simulator]() and the [trajectory simulator](). The former allows users to generate simulated running match records for a given amount of time. The latter takes as input the given state of a kioney exchange pool, and will simulate a particular patient for some number of trajectories until they exit the pool. 
+
+
 ## Getting started
 
 OpenKPD requires only two dependencies to run: Java and CPLEX. Any 64-bit installation of [Java](https://www.java.com/en/download/manual.jsp) (JRE or JDK) will work with OpenKPD. OpenKPD also requires CPLEX Optimization Studio 12.6.3. CPLEX can be downloaded for free through the [IBM Academic Initiative](https://academic.ibm.com/a2mt/email-auth).
@@ -51,11 +58,10 @@ OpenKPD was developed as a fork of [JohnDickerson/KidneyExchange](https://github
 
 ### License
 
-OpenKPD is distributed by an [GNU General Public License v2.0](https://github.com/ndurvasula/OpenKPD/blob/master/LICENSE).
+OpenKPD is distributed by a [GNU General Public License v2.0](https://github.com/ndurvasula/OpenKPD/blob/master/LICENSE).
 
 ### Contributing
 
-When contributing to this repository, please first discuss the change you wish to make via issue,
-email, or any other method with the owners of this repository before making a change.
+Contributions are very welcome! Feel free to raise an issue through GitHub, or [get in touch](https://ndurvasula.com) if you'd like to contribute, or if you have any questions.
 
 
