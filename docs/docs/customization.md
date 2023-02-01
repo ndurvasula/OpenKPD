@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Customization
+title: Policy Customization
 nav_order: 6
 ---
 
