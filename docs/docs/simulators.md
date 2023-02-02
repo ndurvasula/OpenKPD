@@ -33,8 +33,7 @@ The following parameters are relevant for both the Batch Simulator and Trajector
 - `CYCLE_CAP`: sets the maximum length of any cycle in the integer program used to find matches.
 - `CPLEX_PATH`: links CPLEX to OpenKPD. See [Installation](https://openkpd.org/docs/installation/) for more information.
 
-By default, OpenKPD will run the [UNOS matching policy](https://optn.transplant.hrsa.gov/media/3239/20191011_kidney_kpd_priority_points.pdf), and patients will arrive according to a distribution that was inferred using real UNOS data. The policy can be customized using the techniques described in the [Policy Customization](https://openkpd.org/docs/customization/) section of the documentation. The parameters `CUSTOM_WEIGHTS_PATH` and `CUSTOM_WEIGHTS_CLASSNAME` are used to set a custom policy.  
-
+By default, OpenKPD will run the [UNOS matching policy](https://optn.transplant.hrsa.gov/media/3239/20191011_kidney_kpd_priority_points.pdf), and patients will arrive according to a distribution that was inferred using real UNOS data. The policy can be customized using the techniques described in the [Policy Customization](https://openkpd.org/docs/customization/) section of the documentation. The parameters `CUSTOM_WEIGHTS_PATH` and `CUSTOM_WEIGHTS_CLASSNAME` are used to set a custom policy.
 
 
 ## Batch Simulation

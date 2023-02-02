@@ -9,7 +9,7 @@ permalink: /
 # State-of-the-art kidney exchange simulation
 {: .fs-9 }
 
-OpenKPD provides a platform for generating realistic kidney exchange data under a customizable matching policy.  
+OpenKPD provides a platform for generating realistic kidney exchange data without infringing upon patient privacy.  
 {: .fs-6 .fw-300 }
 
 [Download OpenKPD](/OpenKPD.zip){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }
