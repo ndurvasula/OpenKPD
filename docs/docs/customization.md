@@ -1,10 +1,10 @@
 ---
 layout: default
 title: Policy Customization
-nav_order: 6
+nav_order: 4
 ---
 
-# Customization
+# Policy Customization
 {: .no_toc }
 
 ## Table of contents

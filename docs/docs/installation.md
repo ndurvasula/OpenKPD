@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Installation
-nav_order: 1
+nav_order: 2
 ---
 
 # Installation
@@ -24,8 +24,4 @@ OpenKPD requires only two dependencies to run: Java and CPLEX. Any 64-bit instal
 
 ## Linking OpenKPD to CPLEX
 
-In the same folder as `OpenKPD.jar`, locate the file `config.txt`. Besides facilitating customizations to the matching policy, this file is used to link CPLEX to OpenKPD. This can be done by modifying the key variable `CPLEX_PATH`, as shown below.
-
-![config](config_img.png)
-
-The variable should point to the directory of the CPLEX executable. For OSX users, this directory will look like `/Applications/CPLEX_Studio/cplex/bin/x86_64_OSX/`.
+In the same folder as `OpenKPD.jar`, locate the file `config.txt`. Besides facilitating customizations to the matching policy, this file is used to link CPLEX to OpenKPD. This can be done by modifying the key variable `CPLEX_PATH`. The variable should point to the directory of the CPLEX executable. For OSX users, this directory will look like `/Applications/CPLEX_Studio/cplex/bin/x86_64_OSX/`.
