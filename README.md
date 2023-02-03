@@ -1,7 +1,7 @@
 OpenKPD
 ==============
 
-OpenKPD is an open-source platform for state-of-the-art kidney exchange simulation.
+[OpenKPD](https://openkpd.org) is an open-source platform for state-of-the-art kidney exchange simulation.
 
 ## What is kidney exchange?
 
@@ -13,7 +13,7 @@ A recent innovation, kidney exchange, allows patients to bring an (incompatible)
 
 Detailed data pertaining to realistic kidney exchange networks can give crucial insight into how to improve these systems to be more efficient and equitable. However, much of this data is inaccessible to researchers due to its fundamentally sensitive nature. This package provides a means for generating realistic synthetic data so that researchers can have open access to key data without infringing upon patient privacy. 
 
-This framework comes packaged with two simulators: the [batch simulator]() and the [trajectory simulator](). The former allows users to generate simulated running match records for a given amount of time. The latter takes as input the given state of a kioney exchange pool, and will simulate a particular patient for some number of trajectories until they exit the pool. See [Installation](https://openkpd.org/docs/installation/) to get started.
+This framework comes packaged with two simulators: the [batch simulator](https://openkpd.org/docs/simulators#batch-simulation) and the [trajectory simulator](https://openkpd.org/docs/simulators#trajectory-simulation). The former allows users to generate simulated running match records for a given amount of time. The latter takes as input the given state of a kioney exchange pool, and will simulate a particular patient for some number of trajectories until they exit the pool. See [Installation](https://openkpd.org/docs/installation/) to get started.
 
 
 ## About OpenKPD
