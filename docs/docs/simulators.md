@@ -43,8 +43,15 @@ OpenKPD comes with two packaged simulators. The first of which is the _batch sim
 ![batch](batch.png)
 
 
+The batch simulator takes one argument: the number of days to simulate. It returns three objects. First, it outputs a file `data.csv` which consists of a list of patients that exited the exchange, along with their outcomes. Next, it returns two objects: `terminal.pool` and `terminal.poolgen`. These latter two files can be used to sample patient trajecgtories that begin at the end of batch simulation (see[Trajectory Simulation](#trajectory-simulation) for more information). 
 
+To run the batch simulator, open a terminal in the same directory as `OpenKPD.jar` and enter the following command:
 
+```java -jar OpenKPD.jar batch <config> <days>```
+
+where `<config>` points to your configuration file as shown in [Configuration](#configuration), and `<days>` is the number of days to simulate.
 
 
 ## Trajectory Simulation
+
+Whereas batch simulation samples patient outcomes for those exiting the exchange, trajecory simulation samples patient outcomes for those entering the exchange. Starting from some initial pool, the trajectory simulator will sample some number of patients 
