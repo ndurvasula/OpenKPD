@@ -21,6 +21,8 @@ OpenKPD requires only two dependencies to run: Java and CPLEX. Any 64-bit instal
 
 ## Installing CPLEX 12.6.3
 
+Use the part number `CRW5CML` to install CPLEX 12.6.3 through the academic initiative program.
+
 
 ## Linking OpenKPD to CPLEX
 
