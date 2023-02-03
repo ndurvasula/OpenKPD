@@ -6,7 +6,7 @@ description: "OpenKPD is an open-source platform for state-of-the-art kidney exc
 permalink: /
 ---
 
-# State-of-the-art kidney exchange simulation
+# State-of-the-art (and open-source) kidney exchange simulation
 {: .fs-9 }
 
 OpenKPD provides a platform for generating realistic kidney exchange data without infringing upon patient privacy.  
