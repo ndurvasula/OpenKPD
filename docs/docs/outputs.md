@@ -30,7 +30,7 @@ The following logged variables pertain to the state of the pool at the time of e
 
 The following logged variables are key patient outcomes corresponding to the manner in which the patient exited the pool
 
-- `OUTCOME`: returns whether the patient was `MATCHED` or if the patient `EXPIRED` prior to a match outcome. In sample simulation, there is a further outcome `TIMEOUT` that occurs when the number of elapsed iterations surpasses the `TIMEOUT` variable set in the [configuration file][https://openkpd.org/docs/simulators#trajectory-simulation].
+- `OUTCOME`: returns whether the patient was `MATCHED` or if the patient `EXPIRED` prior to a match outcome. In sample simulation, there is a further outcome `TIMEOUT` that occurs when the number of elapsed iterations surpasses the `TIMEOUT` variable set in the [configuration file](https://openkpd.org/docs/simulators#trajectory-simulation).
 - `ITERATIONS`: the number of iterations that the patient spent in the pool prior to exit. 
 - `LKDPI`: this variable measures the quality of a match outcome, and is computed using the formula for the [Living Kidney Donor Profile Index](https://pubmed.ncbi.nlm.nih.gov/26752290/). If there is no match outcome, this field is `null`. 
 
