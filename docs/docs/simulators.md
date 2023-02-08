@@ -16,9 +16,7 @@ nav_order: 3
 ---
 ## Configuration
 
-OpenKPD has a number of parameters that can be set through a configuration file. In the download release, this file is `config.txt`, as shown below.
-
-![config](config_img.png)
+OpenKPD has a number of parameters that can be set through a configuration file. In the download release, this file is `config.txt`.
 
 The following parameters are relevant for both the Batch Simulator and Trajectory Simulator. By default, all constants are set to corresponding to data collected from the UNOS exchange:
 
