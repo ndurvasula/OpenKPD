@@ -130,4 +130,10 @@ With the `import` statements for [`openkpd.Simulation`](https://github.com/ndurv
 
 
 
+### Helpful methods and variables in `openkpd.SimulationAltruist`
+
+### Helpful methods and variables in `openkpd.SimulationPair`
+
+
+
 ## Linking OpenKPD to a custom policy

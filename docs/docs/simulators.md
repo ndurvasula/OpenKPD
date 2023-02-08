@@ -22,16 +22,18 @@ OpenKPD has a number of parameters that can be set through a configuration file.
 
 The following parameters are relevant for both the Batch Simulator and Trajectory Simulator. By default, all constants are set to corresponding to data collected from the UNOS exchange:
 
-- `PATH`: sets the directory where OpenKPD output files will be written. 
-- `DAYS_PER_MATCH`: sets the policy match frequency, or the number of days patients wait until another round of matching begins.
-- `EXPIRY`: sets the probability of patient expiry per round of matching. 
-- `PATIENCE`: sets the per-round probability that an altruistic donor runs out of patience and leaves the exchnage prior to being matched.
-- `RENEGE`: sets the probability that a bridge donor reneges in a chain
-- `EXPECTED_PAIRS`: sets the expected number of pairs that arrives in the exchange each round.
-- `EXPECTED_ALTRUISTS`: sets the expected number of altruists that arrives in the exchange each round.
-- `CHAIN_CAP`: sets the maximum length of any chain in the integer program used to find matches.
-- `CYCLE_CAP`: sets the maximum length of any cycle in the integer program used to find matches.
-- `CPLEX_PATH`: links CPLEX to OpenKPD. See [Installation](https://openkpd.org/docs/installation/) for more information.
+| Configuration Variable | Description |
+| :---: | :--- |
+| `PATH`| sets the directory where OpenKPD output files will be written |
+| `DAYS_PER_MATCH` | sets the policy match frequency, or the number of days patients wait until another round of matching begins |
+| `EXPIRY`| sets the probability of patient expiry per round of matching |
+| `PATIENCE`| sets the per-round probability that an altruistic donor runs out of patience and leaves the exchnage prior to being matched |
+| `RENEGE` | sets the probability that a bridge donor reneges in a chain |
+|`EXPECTED_PAIRS` | sets the expected number of pairs that arrives in the exchange each round |
+| `EXPECTED_ALTRUISTS`| sets the expected number of altruists that arrives in the exchange each round |
+| `CHAIN_CAP` | sets the maximum length of any chain in the integer program used to find matches |
+| `CYCLE_CAP` | sets the maximum length of any cycle in the integer program used to find matches |
+| `CPLEX_PATH` | links CPLEX to OpenKPD. See [Installation](https://openkpd.org/docs/installation/) for more information |
 
 By default, OpenKPD will run the [UNOS matching policy](https://optn.transplant.hrsa.gov/media/3239/20191011_kidney_kpd_priority_points.pdf), and patients will arrive according to a distribution that was inferred using real UNOS data. The policy can be customized using the techniques described in the [Policy Customization](https://openkpd.org/docs/customization/) section of the documentation. The parameters `CUSTOM_WEIGHTS_PATH` and `CUSTOM_WEIGHTS_CLASSNAME` are used to set a custom policy.
 
@@ -69,10 +71,13 @@ java -jar OpenKPD.jar sample <config> <trajectories> <pool> <sampleID>
 ```
 
 where 
-- `<config>` points to your configuration file as shown in [Configuration](#configuration)
-- `<trajectories>` is the number of trajectories that should be run for the sample
-- `<pool>` is the path to the `.pool` and `.poolgen` files generated via [Batch Simulation](#batch-simulation) (e.g. if batch simulation outputted `terminal.pool` and `terminal.poolgen` in the current directory, then we should set `<pool>` to `./terminal`)
-- `<sampleID>` is used to name the output file -- the output of this command will be a cSV file named `sample<sampleID>.csv` containing a list of the simulated trajectory outcomes
+
+| Variable | Description|
+| :---: | :-- |
+|`<config>`| points to your configuration file as shown in [Configuration](#configuration)|
+| `<trajectories>` | the number of trajectories that should be run for the sample |
+| `<pool>` | path to the `.pool` and `.poolgen` files generated via [Batch Simulation](#batch-simulation) (e.g. if batch simulation outputted `terminal.pool` and `terminal.poolgen` in the current directory, then we should set `<pool>` to `./terminal`) |
+| `<sampleID>` | used to name the output file -- the output of this command will be a cSV file named `sample<sampleID>.csv` containing a list of the simulated trajectory outcomes|
 
 Due to their biological features, certain patients are unfortunately never matched in the exchange. If such a patient is sampled, it can take a long time for the `sample` command to terminate. To mitigate this, the `TIMEOUT` variable can be set in the [configuration file](#configuration), which limits the number of matching rounds per trajectory to a specified quantity.
 
