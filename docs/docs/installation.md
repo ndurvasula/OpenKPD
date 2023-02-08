@@ -27,7 +27,9 @@ Use the part number `CRW5CML` to install CPLEX 12.6.3 through the academic initi
 OpenKPD requires two data files to function: `pairs.csv` and `alts.csv`. These files contain lists of synthetic patient data that was generated using real UNOS patient data. To protect patient privacy, we request that you email 
 - [Naveen](https://ndurvasula.com) (ndurvasula [at] berkeley [dot] edu) and/or 
 - [John](http://jpdickerson.com) (johnd [at] umd [dot] edu) and/or 
-- [Aravind](http://www.cs.umd.edu/~srin/) (asriniv1 [at] umd [dot] edu) for these files
+- [Aravind](http://www.cs.umd.edu/~srin/) (asriniv1 [at] umd [dot] edu) 
+
+for these files
 
 
 ## Linking OpenKPD to CPLEX
