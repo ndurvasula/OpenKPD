@@ -128,12 +128,58 @@ With the `import` statements for [`openkpd.Simulation`](https://github.com/ndurv
 
 ### Helpful methods and variables in `openkpd.Simulation`
 
+| Public Variable/Method | Description |
+| :---: | :--- |
+| `Simulation.DAYS_PER_MATCH` | Corresponds to the value `DAYS_PER_MATCH` set in the [configuration file](https://openkpd.org/docs/simulators#configuration). |
+| `Simulation.DEATH` | Corresponds the value `EXPIRY` set in the [configuration file](https://openkpd.org/docs/simulators#configuration). |
+| `Simulation.PATIENCE` | Corresponds to the value `PATIENCE` in the [configuration file](https://openkpd.org/docs/simulators#configuration) |
+| `Simulation.RENEGE` | Corresponds to the value `RENEGE` in the [configuration file](https://openkpd.org/docs/simulators#configuration) |
+| `Simulation.EXPECTED_PAIRS` | Corresponds to the value `EXPECTED_PAIRS` in the [configuration file](https://openkpd.org/docs/simulators#configuration) |
+| `Simulation.EXPECTED_ALTRUISTS` | Corresponds to the value `EXPECTED_ALTRUISTS` in the [configuration file](https://openkpd.org/docs/simulators#configuration) |
+| `Simulation.CHAIN_CAP` | Corresponds to the value `CHAIN_CAP` in the [configuration file](https://openkpd.org/docs/simulators#configuration) |
+| `Simulation.CYCLE_CAP` | Corresponds to the value `CYCLE_CAP` in the [configuration file](https://openkpd.org/docs/simulators#configuration) |
+| `Simulation.LKDPI(SimulationPair p, SimulationAltruist m)` | Computes the quality of a transplant from `SimulationALtruist` `m` to the patient of a  `SimulationPair` `p` using the [Living Kidney Donor Profile Index](https://pubmed.ncbi.nlm.nih.gov/26752290/) |
 
 
 ### Helpful methods and variables in `openkpd.SimulationAltruist`
 
+We consider a `SimulationAltruist` `donor` (as in the method description for `computeWeight`).
+
+| Public Variable/Method | Description |
+| :---: | :--- |
+| `donor.age_don` | Corresponds to `AGE_MATCH` in [Numerical Features](https://openkpd.org/docs/outputs#numerical-features) |
+| `donor.egfr` | Corresponds to `EGFR_MATCH` in [Numerical Features](https://openkpd.org/docs/outputs#numerical-features) |
+| `donor.bmi_don` | Corresponds to `BMI_MATCH` in [Numerical Features](https://openkpd.org/docs/outputs#numerical-features) |
+| `donor.bp_sytolic` | Corresponds to `BP_SYSTOLIC_MATCH` in [Numerical Features](https://openkpd.org/docs/outputs#numerical-features) |
+| `donor.weight_don` | Corresponds to `WEIGHT_MATCH` in [Numerical Features](https://openkpd.org/docs/outputs#numerical-features) |
+| `donor.isAfricanAmerican` | Corresponds to `AFRICAN_AMERICAN_MATCH` in [Categorical and Boolean Features](https://openkpd.org/docs/outputs#categorical-and-boolean-features) |
+| `donor.isCigaretteUser` | Corresponds to `HCU_MATCH` in [Categorical and Boolean Features](https://openkpd.org/docs/outputs#categorical-and-boolean-features) |
+| `donor.isAfricanAmerican` | Corresponds to `AFRICAN_AMERICAN_MATCH` in [Categorical and Boolean Features](https://openkpd.org/docs/outputs#categorical-and-boolean-features) |
+| `donor.isDonorMale` | Corresponds to `SEX_MATCH` in [Categorical and Boolean Features](https://openkpd.org/docs/outputs#categorical-and-boolean-features) |
+| `donor.HLA_A_don` | Corresponds to `MA1` and `MA2` in [Categorical and Boolean Features](https://openkpd.org/docs/outputs#categorical-and-boolean-features) |
+| `donor.HLA_B_don` | Corresponds to `MB1` and `MB2` in [Categorical and Boolean Features](https://openkpd.org/docs/outputs#categorical-and-boolean-features) |
+| `donor.HLA_DR_don` | Corresponds to `MDR1` and `MDR2` in [Categorical and Boolean Features](https://openkpd.org/docs/outputs#categorical-and-boolean-features) |
+| `donor.bloodTypeDonor` | Corresponds to `ABO_MATCH` in [Categorical and Boolean Features](https://openkpd.org/docs/outputs#categorical-and-boolean-features). This is an `enum` -- see [BloodType.java](https://github.com/ndurvasula/OpenKPD/blob/master/source/src/edu/cmu/cs/dickerson/kpd/structure/types/BloodType.java) for its definition |
+
+
 ### Helpful methods and variables in `openkpd.SimulationPair`
 
+We consider a `SimulationPair` `patient` (as in the method description for `computeWeight`).
+
+| Public Variable/Method | Description |
+| :---: | :--- |
+| `patient.age_cand` | Corresponds to `AGE_CAND` in [Numerical Features](https://openkpd.org/docs/outputs#numerical-features) |
+| `patient.weight_cand` | Corresponds to `WEIGHT_CAND` in [Numerical Features](https://openkpd.org/docs/outputs#numerical-features) |
+| `patient.patientCPRA` | Corresponds to `CPRA_AT_MATCH_RUN` in [Numerical Features](https://openkpd.org/docs/outputs#numerical-features) |
+| `patient.getIterations()` | Returns the number of match iterations the patient has been in the pool |
+| `patient.getPairs()` | Returns the number of patient-donor pairs in the pool when this patient entered the exchange |
+| `patient.getAlts()` | Returns the number of altruists in the pool when this patient entered the exchange |
+| `patient.HLA_A_cand` | Corresponds to `CA1` and `CA2` in [Categorical and Boolean Features](https://openkpd.org/docs/outputs#categorical-and-boolean-features) |
+| `patient.HLA_B_cand` | Corresponds to `CB1` and `CB2` in [Categorical and Boolean Features](https://openkpd.org/docs/outputs#categorical-and-boolean-features) |
+| `patient.HLA_DR_cand` | Corresponds to `CDR1` and `CDR2` in [Categorical and Boolean Features](https://openkpd.org/docs/outputs#categorical-and-boolean-features) |
+| `patient.bloodTypePatient` | Corresponds to `ABO_CAND` in [Categorical and Boolean Features](https://openkpd.org/docs/outputs#categorical-and-boolean-features). This is an `enum` -- see [BloodType.java](https://github.com/ndurvasula/OpenKPD/blob/master/source/src/edu/cmu/cs/dickerson/kpd/structure/types/BloodType.java) for its definition |
 
 
 ## Linking OpenKPD to a custom policy
+
+Once a custom policy has been written, it can be linked to OpenKPD by means of the [configuration file](https://openkpd.org/docs/simulators#configuration). This is done through the variables `CUSTOM_WEIGHTS_PATH` and `CUSTOM_WEIGHTS_CLASSNAME`. Given a `<package_name>` and `<class_name>`, we should set `CUSTOM_WEIGHTS_CLASSNAME` to be `<package_name>.<class_name>` and `CUSTOM_WEIGHTS_PATH` to be the path `/.../<package_name>/<class_name>.java` to the custom weight file. 

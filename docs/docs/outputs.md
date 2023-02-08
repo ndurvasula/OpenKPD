@@ -25,8 +25,8 @@ The following logged variables pertain to the state of the pool at the time of e
 | :---: | :--- |
 | `ID` | the patient-donor pair's numerical ID in the pool |
 | `MR_NUM`| the age of the pool when the patient outcome was logged. If running a sample simulation, this is the number of iterations after starting the sample simulation -- not the number of iterations since the oriignal batch simulation |
-|`NUM_PAIRS`| the number of patient-donor pairs in the pool at the time of exit |
-| `NUM_ALTS`| the number of altruists in the pool at the time of exit |
+|`NUM_PAIRS`| the number of patient-donor pairs in the pool at the time of entry |
+| `NUM_ALTS`| the number of altruists in the pool at the time of entry |
 
 ## Patient outcomes
 
