@@ -15,6 +15,8 @@ Detailed data pertaining to realistic kidney exchange networks can give crucial 
 
 This framework comes packaged with two simulators: the [batch simulator](https://openkpd.org/docs/simulators#batch-simulation) and the [trajectory simulator](https://openkpd.org/docs/simulators#trajectory-simulation). The former allows users to generate simulated running match records for a given amount of time. The latter takes as input the given state of a kioney exchange pool, and will simulate a particular patient for some number of trajectories until they exit the pool. See [Installation](https://openkpd.org/docs/installation/) to get started.
 
+Check out [our paper](https://www.cs.umd.edu/~srin/PDF/2022/2022-ijcai-kidney-exchange-longer.pdf) to see how OpenKPD (in conjunction with the standard Python data science stack) can be used to evaluate approaches to predict patient outcomes in kidney exchange, and provide insight into policy miscalibrations and harmful outcome disparities. 
+
 
 ## About OpenKPD
 
